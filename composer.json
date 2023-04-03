@@ -1,0 +1,22 @@
+{
+    "name": "assegaiphp/util",
+    "description": "A  collection of useful PHP utility classes to simplify common tasks and enhance application development.",
+    "require-dev": {
+        "codeception/codeception": "^5.0"
+    },
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Assegai\\Util\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Andrew Masiye",
+            "email": "amasiye313@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=8.2"
+    }
+}
