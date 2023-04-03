@@ -31,6 +31,29 @@ class ArrayUtil
     }
 
     /**
+     * Checks if an array is not associative.
+     *
+     * @param array $array The array to check.
+     * @return bool True if the array is not associative, false otherwise.
+     */
+    public static function isNotAssociative(array $array): bool
+    {
+        return !self::isAssociative($array);
+    }
+
+    /**
+     * Checks if an array is sequential. An array is sequential if it
+     * has consecutive integer keys starting at 0.
+     *
+     * @param array $array The array to check.
+     * @return bool True if the array is sequential, false otherwise.
+     */
+    public static function isSequential(array $array): bool
+    {
+        return array_keys($array) === range(0, count($array) - 1);
+    }
+
+    /**
      * Checks if an array is empty.
      *
      * @param array $array The array to check.
@@ -83,5 +106,29 @@ class ArrayUtil
     public static function isNotSequential(array $array): bool
     {
         return self::isAssociative($array);
+    }
+
+    /**
+     * Checks if an array is numeric. An array is numeric if it has
+     * consecutive integer keys starting at 0.
+     *
+     * @param array $array The array to check.
+     * @return bool True if the array is numeric, false otherwise.
+     */
+    public static function isNumeric(array $array): bool
+    {
+        return array_keys($array) === range(0, count($array) - 1);
+    }
+
+    /**
+     * Checks if an array is not numeric. An array is numeric if it has
+     * consecutive integer keys starting at 0.
+     *
+     * @param array $array The array to check.
+     * @return bool True if the array is not numeric, false otherwise.
+     */
+    public static function isNotNumeric(array $array): bool
+    {
+        return !self::isNumeric($array);
     }
 }
