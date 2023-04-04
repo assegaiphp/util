@@ -5,7 +5,7 @@
 <p style="text-align: center">A progressive <a href="https://php.net">PHP</a> framework for building effecient and scalable server-side applications.</p>
 
 ## Description 
-assegaiphp/util is a PHP package that provides a collection of utility classes to simplify common tasks and enhance application development. It includes various utility classes that can be used to perform common tasks, such as working with arrays, strings, dates, and more.
+The Assegai Util package is a PHP package that provides a collection of utility classes to simplify common tasks and enhance application development. It includes various utility classes that can be used to perform common tasks, such as working with arrays, strings, dates, and more.
 
 ## Installation
 The recommended way to install assegaiphp/util is through Composer. Run the following command in your terminal:
