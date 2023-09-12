@@ -41,6 +41,39 @@ function array_find_last(array $arr, callable $callback): mixed
   return array_find($reversedArray, $callback);
 }
 
+/**
+ * Checks if an array is associative. An array is associative if it has at least one key that is not an integer.
+ *
+ * @param array $array The array to check.
+ * @return bool True if the array is associative, false otherwise.
+ */
+function array_is_associative(array $array): bool
+{
+  return array_keys($array) !== range(0, count($array) - 1);
+}
+
+/**
+ * Checks if an array is sequential. An array is sequential if it has consecutive integer keys starting at 0.
+ *
+ * @param array $array The array to check.
+ * @return bool True if the array is sequential, false otherwise.
+ */
+function array_is_sequential(array $array): bool
+{
+  return array_keys($array) === range(0, count($array) - 1);
+}
+
+/**
+ * Checks if an array is multidimensional. An array is multidimensional if it contains at least one array.
+ *
+ * @param array $array The array to check.
+ * @return bool True if the array is multidimensional, false otherwise.
+ */
+function array_is_multi_dimensional(array $array): bool
+{
+  return count($array) !== count($array, COUNT_RECURSIVE);
+}
+
 /***********************
  *       Objects       *
  ***********************/
@@ -72,17 +105,6 @@ function strtocamel(string $string): string
 }
 
 /**
- * Converts a string to kebab case and capitalizes the first letter.
- *
- * @param string $string The string to convert.
- * @return string The converted string.
- */
-function strtokebab_ucfirst(string $string): string
-{
-  return ucfirst(strtokebab($string));
-}
-
-/**
  * Converts a string to Pascal Case format.
  *
  * @param string $string The string to be converted.
@@ -91,6 +113,11 @@ function strtokebab_ucfirst(string $string): string
  */
 function strtopascal(string $string): string
 {
+  if (ctype_upper($string))
+  {
+    return ucfirst(strtolower($string));
+  }
+
   $words = preg_split('/[\s\-\W_]+/', $string);
   $words = array_map(fn($word) => ucfirst($word), $words);
 
@@ -105,7 +132,14 @@ function strtopascal(string $string): string
  */
 function strtosnake(string $string): string
 {
-  return mb_strtolower(preg_replace('/[\s\-\W]+/', '_', $string));
+  $output = $string;
+
+  # Replace underscores, spaces, and hyphens with underscores
+  $output = preg_replace('/[\s\-\W_]+/', '_', $output);
+
+  $output = preg_replace('/([a-z])([A-Z])/', "$1_$2", $output);
+
+  return mb_strtolower($output);
 }
 
 /**
@@ -116,7 +150,25 @@ function strtosnake(string $string): string
  */
 function strtokebab(string $string): string
 {
-  return mb_strtolower(preg_replace('/(?<!^)[A-Z]/', '-$0', $string));
+  $output = $string;
+
+  # Replace underscores, spaces, and hyphens with dashes
+  $output = preg_replace('/[\s\-\W_]+/', '-', $output);
+
+  # Replace uppercase letters with dashes
+  $output = preg_replace('/([a-z])([A-Z])/', '$1-$2', $output);
+  return mb_strtolower($output);
+}
+
+/**
+ * Converts a string to kebab case and capitalizes the first letter.
+ *
+ * @param string $string The string to convert.
+ * @return string The converted string.
+ */
+function strtokebab_ucfirst(string $string): string
+{
+  return ucfirst(strtokebab($string));
 }
 
 /**
