@@ -20,12 +20,22 @@ class FunctionsCest
   // tests
   public function testArrayFunctions(UnitTester $I): void
   {
-    $I->wantToTest('that the array_find function works as expected');
     $needle = 'needle';
     $haystack = ['foo', 'bar', 'needle', 'baz'];
     $needleLessHaystack = ['foo', 'bar', 'baz'];
     $emptyHaystack = [];
 
+    $I->wantToTest('that the array_first function works as expected');
+    $I->assertEquals('foo', array_first($haystack));
+    $I->assertNull(array_first($emptyHaystack));
+    $I->expectThrowable('TypeError', function () use ($needle) { array_first($needle); });
+
+    $I->wantToTest('that the array_last function works as expected');
+    $I->assertEquals('baz', array_last($haystack));
+    $I->assertNull(array_last($emptyHaystack));
+    $I->expectThrowable('TypeError', function () use ($needle) { array_last($needle); });
+
+    $I->wantToTest('that the array_find function works as expected');
     $I->assertEquals('needle', array_find($haystack, function ($item) use ($needle) { return $item === $needle; }));
     $I->assertNull(array_find($needleLessHaystack, function ($item) use ($needle) { return $item === $needle; }));
     $I->assertNull(array_find($emptyHaystack, function ($item) use ($needle) { return $item === $needle; }));
@@ -44,19 +54,32 @@ class FunctionsCest
 
     $I->assertTrue(array_is_associative($associativeArray));
     $I->assertFalse(array_is_associative($sequentialArray));
-    $I->expectThrowable('TypeError', function () use ($needle) { array_is_associative($needle); });
+    $I->expectThrowable('TypeError', function () use ($needle) { return array_is_associative($needle); });
 
     $I->wantToTest('that the array_is_sequential function works as expected');
     $I->assertTrue(array_is_sequential($sequentialArray));
     $I->assertFalse(array_is_sequential($associativeArray));
-    $I->expectThrowable('TypeError', function () use ($needle) { array_is_sequential($needle); });
+    $I->expectThrowable('TypeError', function () use ($needle) { return array_is_sequential($needle); });
 
     $I->wantToTest('that the array_is_multi_dimensional function works as expected');
     $multiDimensionalArray = [['foo', 'bar'], ['baz', 'qux']];
     $I->assertTrue(array_is_multi_dimensional($multiDimensionalArray));
     $I->assertFalse(array_is_multi_dimensional($associativeArray));
     $I->assertFalse(array_is_multi_dimensional($sequentialArray));
-    $I->expectThrowable('TypeError', function () use ($needle) { array_is_multi_dimensional($needle); });
+    $I->expectThrowable('TypeError', function () use ($needle) { return array_is_multi_dimensional($needle); });
+
+    $I->wantToTest('that the array_trim function works as expected');
+    $array = [null, '', 'foo', '', 'bar', null, 'baz', false, 'qux', false, null];
+    $I->assertEquals(['foo', '', 'bar', null, 'baz', false, 'qux'], array_trim($array));
+    $I->assertEquals([], array_trim($emptyHaystack));
+    $I->expectThrowable('TypeError', function () use ($needle) { return array_trim($needle); });
+
+    $I->wantToTest('that the array_clean function works as expected');
+    $cleanableArray = ['foo', '', 'bar', null, 'baz', false, 'qux'];
+    $I->assertEquals(['foo', 'bar', 'baz', 'qux'], array_clean($cleanableArray));
+    $I->assertEquals(['foo', '', 'bar', 'baz', false, 'qux'], array_clean($cleanableArray, true));
+    $I->assertEquals([], array_clean($emptyHaystack));
+    $I->expectThrowable('TypeError', function () use ($needle) { return array_clean($needle); });
   }
 
   public function testObjectFunctions(UnitTester $I): void

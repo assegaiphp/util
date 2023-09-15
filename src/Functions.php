@@ -4,25 +4,76 @@
  *        Arrays       *
  ***********************/
 
-/**
- * Returns the first element in the provided array that satisfies the provided testing function.
- *
- * @param array $arr The array to search through.
- * @param callable $callback A callable function that accepts an element of $arr and returns a boolean value.
- *
- * @return mixed|null The first element in $arr that satisfies $callback. Returns null if no element satisfies the
- * condition.
- */
-function array_find(array $arr, callable $callback): mixed
+if (! function_exists('array_first') )
 {
-  foreach ($arr as $item)
+  /**
+   * Returns the first element in an array.
+   *
+   * @param array $array The array to get the first element from.
+   * @return mixed|null The first element in the array, or null if the array is empty.
+   */
+  function array_first(array $array): mixed
   {
-    if ($callback($item))
+    if (empty($array))
     {
-      return $item;
+      return null;
     }
+
+    if (array_is_associative($array))
+    {
+      return array_values($array)[0];
+    }
+
+    return $array[0];
   }
-  return null;
+}
+
+if (! function_exists('array_last') )
+{
+  /**
+   * Returns the last element in an array.
+   *
+   * @param array $array The array to get the last element from.
+   * @return mixed|null The last element in the array, or null if the array is empty.
+   */
+  function array_last(array $array): mixed
+  {
+    if (empty($array))
+    {
+      return null;
+    }
+
+    if (array_is_associative($array))
+    {
+      return array_values($array)[count($array) - 1];
+    }
+
+    return $array[count($array) - 1];
+  }
+}
+
+if (! function_exists('array_find') )
+{
+  /**
+   * Returns the first element in the provided array that satisfies the provided testing function.
+   *
+   * @param array $arr The array to search through.
+   * @param callable $callback A callable function that accepts an element of $arr and returns a boolean value.
+   *
+   * @return mixed|null The first element in $arr that satisfies $callback. Returns null if no element satisfies the
+   * condition.
+   */
+  function array_find(array $arr, callable $callback): mixed
+  {
+    foreach ($arr as $item)
+    {
+      if ($callback($item))
+      {
+        return $item;
+      }
+    }
+    return null;
+  }
 }
 
 /**
@@ -72,6 +123,63 @@ function array_is_sequential(array $array): bool
 function array_is_multi_dimensional(array $array): bool
 {
   return count($array) !== count($array, COUNT_RECURSIVE);
+}
+
+if (! function_exists('array_trim') )
+{
+  /**
+   * Returns an array with all empty elements removed.
+   *
+   * @param array $array The array to trim.
+   * @return array The trimmed array.
+   */
+  function array_trim(array $array): array
+  {
+    if (empty($array))
+    {
+      return $array;
+    }
+
+    $result = $array;
+
+    $firstItem = array_first($result);
+    while ($firstItem === null || $firstItem === '' || $firstItem === false)
+    {
+      array_shift($result);
+      $firstItem = array_first($result);
+    }
+
+    $lastItem = array_last($result);
+    while ($lastItem === null || $lastItem === '' || $lastItem === false)
+    {
+      array_pop($result);
+      $lastItem = array_last($result);
+    }
+
+    return $result;
+  }
+}
+
+if (! function_exists('array_clean') )
+{
+  /**
+   * Returns an array with all empty elements removed. Empty elements include empty strings, null values, and false.
+   *
+   * @param array $array The array to clean.
+   * @param bool $null_only If true, only null values will be removed.
+   * @return array The cleaned array.
+   */
+  function array_clean(array $array, bool $null_only = false): array
+  {
+    $cleanArray = array_filter($array, fn($item) => $null_only ? !is_null($item) : !empty($item));
+
+    if (array_is_sequential($array))
+    {
+      return array_values($cleanArray);
+    }
+
+    return $cleanArray;
+  }
 }
 
 /***********************
