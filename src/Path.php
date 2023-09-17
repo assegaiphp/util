@@ -147,7 +147,6 @@ class Path
    *
    * @param string $path The path to normalize.
    * @return string The normalized path.
-   * @throws Exception If the path could not be normalized.
    */
   public static function normalize(string $path): string
   {
@@ -244,40 +243,37 @@ class Path
    */
   public static function relative(string $from, string $to): string
   {
-    $from = self::normalize($from);
-    $to = self::normalize($to);
+    $from = substr(self::resolve($from), 1);
+    $to = substr(self::resolve($to), 1);
 
-    $fromParts = explode(DIRECTORY_SEPARATOR, $from);
-    $toParts = explode(DIRECTORY_SEPARATOR, $to);
+    $fromParts = array_trim(explode(self::delimiter(), $from));
+    $toParts = array_trim(explode(self::delimiter(), $to));
 
-    $length = min(count($fromParts), count($toParts));
+    $totalFromParts = count($fromParts);
+    $totalToParts = count($toParts);
+    $length = min($totalFromParts, $totalToParts);
+    $samePartsLength = $length;
 
-    $i = 0;
-
-    while ($i < $length && $fromParts[$i] === $toParts[$i])
+    for ($x = 0; $x < $length; $x++)
     {
-      $i++;
-    }
-
-    $relativePath = [];
-
-    if ($i === count($fromParts))
-    {
-      $relativePath[] = '.';
-    }
-    else
-    {
-      $numUp = count($fromParts) - $i - 1;
-
-      for ($j = 0; $j < $numUp; $j++)
+      if ($fromParts[$x] !== $toParts[$x])
       {
-        $relativePath[] = '..';
+        $samePartsLength = $x;
+        break;
       }
     }
 
-    $relativePath = array_merge($relativePath, array_slice($toParts, $i));
+    $outputParts = [];
 
-    return join(DIRECTORY_SEPARATOR, $relativePath);
+    for ($i = $samePartsLength; $i < $totalFromParts; $i++)
+    {
+      $outputParts[] = '..';
+    }
+
+    $outputTail = array_slice($toParts, $samePartsLength);
+    $outputParts = array_merge($outputParts, $outputTail);
+
+    return join(self::delimiter(), $outputParts);
   }
 
   /**
@@ -290,29 +286,56 @@ class Path
    * @param string[] $paths The paths to resolve.
    * @return string The resolved path.
    */
-  public static function resolve(...$paths): string
+  public static function resolve(string ...$paths): string
   {
     if (empty($paths))
     {
       return self::getCwd();
     }
 
-    $totalPaths = count($paths);
+    $resolvedPath = '';
+    $reversedPaths = array_reverse($paths);
 
-    $path = '';
-
-    for ($x = $totalPaths - 1; $x >= 0; $x--)
+    # Normalize each path
+    foreach ($reversedPaths as $path)
     {
-      $path .= self::join($paths[$x], $path);
-      $path = self::normalize($path);
+      $resolvedPath = self::join($path, $resolvedPath);
 
+      # If the path is absolute, return it
       if (self::isAbsolute($path))
       {
-        return $path;
+        return self::normalize($resolvedPath);
       }
     }
 
-    return '/' . self::normalize($path);
+    # Normalize the joined path
+    $resolvedPath = self::normalize($resolvedPath);
+
+    # If the path is absolute, return it
+    if (self::isAbsolute($resolvedPath))
+    {
+      return $resolvedPath;
+    }
+
+    # else prepend the current working directory
+    return self::join(self::getCwd(), $resolvedPath);
+
+//    $totalPaths = count($paths);
+//
+//    $path = '';
+//
+//    for ($x = $totalPaths - 1; $x >= 0; $x--)
+//    {
+//      $path .= self::join($paths[$x], $path);
+//      $path = self::normalize($path);
+//
+//      if (self::isAbsolute($path))
+//      {
+//        return $path;
+//      }
+//    }
+//
+//    return '/' . self::normalize($path);
   }
 
   /**
