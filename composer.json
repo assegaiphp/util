@@ -10,7 +10,8 @@
     "autoload": {
         "psr-4": {
             "Assegai\\Util\\": "src/"
-        }
+        },
+        "files": ["src/Functions.php"]
     },
     "authors": [
         {
