@@ -346,3 +346,32 @@ function empty_directory(string $directory_path): bool
 
   return true;
 }
+
+
+/***********************
+ *        JSON         *
+ ***********************/
+if (! function_exists('json_is_valid') )
+{
+  /**
+   * Returns true if the JSON string is valid, false otherwise. If the PHP version is 8.3.0 or greater, this function
+   * will use the built-in json_validate function.
+   *
+   * @param string $input The JSON string to validate
+   * @return bool Returns true if the JSON string is valid, false otherwise.
+   */
+  function json_is_valid(string $input): bool
+  {
+    if (version_compare(PHP_VERSION, '8.3.0', '>=') >= 0)
+    {
+      if (function_exists('json_validate'))
+      {
+        return json_validate($input);
+      }
+    }
+
+    json_decode($input);
+
+    return json_last_error() === JSON_ERROR_NONE;
+  }
+}
