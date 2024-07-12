@@ -18,7 +18,15 @@ composer require assegaiphp/util
 Once you have installed assegaiphp/util, you can start using its utility classes by simply importing them into your PHP code. For example, to use the ArrayUtil class, you would add the following line at the top of your PHP file:
 
 ```php
-use AssegaiPHP\Util\ArrayUtil;
+use Assegai\Util\ArrayUtil;
+
+$numericArray = [1, 2, 3, 4, 5];
+
+if (ArrayUtil::contains($numericArray, 3)) {
+    echo 'The array contains the value 3.';
+} else {
+    echo 'The array does not contain the value 3.';
+}
 
 ```
 
