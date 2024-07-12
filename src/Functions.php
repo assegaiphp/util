@@ -1,8 +1,10 @@
-<?php
+<?php /** @noinspection SpellCheckingInspection */
 
 /***********************
  *        Arrays       *
  ***********************/
+
+use Assegai\Util\Text;
 
 if (! function_exists('array_first') )
 {
@@ -216,8 +218,7 @@ if (! function_exists('object_to_array') )
  *       Strings       *
  ***********************/
 
-if (! function_exists('strtocamel') )
-{
+if (! function_exists('strtocamel') ) {
   /**
    * Converts a string to camel case.
    *
@@ -230,8 +231,7 @@ if (! function_exists('strtocamel') )
   }
 }
 
-if (! function_exists('strtopascal') )
-{
+if (! function_exists('strtopascal') ) {
   /**
    * Converts a string to Pascal Case format.
    *
@@ -241,8 +241,7 @@ if (! function_exists('strtopascal') )
    */
   function strtopascal(string $string): string
   {
-    if (ctype_upper($string))
-    {
+    if (ctype_upper($string)) {
       return ucfirst(strtolower($string));
     }
 
@@ -253,8 +252,7 @@ if (! function_exists('strtopascal') )
   }
 }
 
-if (! function_exists('strtosnake') )
-{
+if (! function_exists('strtosnake') ) {
   /**
    * Converts a string to snake_case.
    *
@@ -274,8 +272,7 @@ if (! function_exists('strtosnake') )
   }
 }
 
-if (! function_exists('strtokebab') )
-{
+if (! function_exists('strtokebab') ) {
   /**
    * Converts a string to Kebab Case.
    *
@@ -295,8 +292,7 @@ if (! function_exists('strtokebab') )
   }
 }
 
-if (! function_exists('strtokebab_ucfirst') )
-{
+if (! function_exists('strtokebab_ucfirst') ) {
   /**
    * Converts a string to kebab case and capitalizes the first letter.
    *
@@ -309,8 +305,29 @@ if (! function_exists('strtokebab_ucfirst') )
   }
 }
 
-if (! function_exists('extract_class_name') )
-{
+if (! function_exists('strtoplural') ) {
+  /**
+   * Converts a string to its plural form.
+   *
+   * @param string $string The string to convert.
+   * @return string The plural form of the string.
+   */
+  function strtoplural(string $string): string
+  {
+    $text = new Text($string);
+    return $text->getPluralForm();
+  }
+}
+
+if (! function_exists('strtosingular') ) {
+  function strtosingular(string $string): string
+  {
+    $text = new Text($string);
+    return $text->getSingularForm();
+  }
+}
+
+if (! function_exists('extract_class_name') ) {
   /**
    * Extracts the class name from a string containing a class definition.
    *
@@ -320,15 +337,13 @@ if (! function_exists('extract_class_name') )
   function extract_class_name(string $class_definition): string|false
   {
     # Attempt to match the class definition using a regular expression.
-    if (false === preg_match('/class\s+([a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*)/', $class_definition, $matches))
-    {
+    if (false === preg_match('/class\s+([a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*)/', $class_definition, $matches)) {
       # If no match is found, return false.
       return false;
     }
 
     # Ensure that the $matches array contains at least one element.
-    if (count($matches) < 1)
-    {
+    if (count($matches) < 1) {
       # If $matches is empty, return false.
       return false;
     }

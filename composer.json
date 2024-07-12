@@ -2,7 +2,6 @@
     "name": "assegaiphp/util",
     "description": "A  collection of useful PHP utility classes to simplify common tasks and enhance application development.",
     "require-dev": {
-        "codeception/codeception": "^5.0",
         "codeception/module-phpbrowser": "*",
         "codeception/module-asserts": "*"
     },
@@ -20,6 +19,7 @@
         }
     ],
     "require": {
-        "php": ">=8.2"
+        "php": ">=8.2",
+        "plejus/pluralize": "^1.0"
     }
 }
