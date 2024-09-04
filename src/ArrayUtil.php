@@ -16,7 +16,19 @@ class ArrayUtil
      */
     public static function inArray(mixed $needle, array $haystack): bool
     {
-        return in_array($needle, $haystack);
+      return in_array($needle, $haystack);
+    }
+
+    /**
+     * Checks if a value is in an array. This is an alias for inArray.
+     *
+     * @param mixed $needle The value to search for.
+     * @param array $haystack The array to search in.
+     * @return bool True if the value is in the array, false otherwise.
+     */
+    public static function contains(mixed $needle, array $haystack): bool
+    {
+      return self::inArray($needle, $haystack);
     }
 
     /**
