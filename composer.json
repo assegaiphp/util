@@ -20,6 +20,6 @@
     ],
     "require": {
         "php": ">=8.2",
-        "plejus/pluralize": "^1.0"
+        "atatusoft-ltd/plural": "^1.1"
     }
 }

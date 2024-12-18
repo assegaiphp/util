@@ -6,8 +6,7 @@
 
 use Assegai\Util\Text;
 
-if (! function_exists('array_first') )
-{
+if (! function_exists('array_first') ) {
   /**
    * Returns the first element in an array.
    *
@@ -16,13 +15,11 @@ if (! function_exists('array_first') )
    */
   function array_first(array $array): mixed
   {
-    if (empty($array))
-    {
+    if (empty($array)) {
       return null;
     }
 
-    if (array_is_associative($array))
-    {
+    if (array_is_associative($array)) {
       return array_values($array)[0];
     }
 
@@ -30,8 +27,7 @@ if (! function_exists('array_first') )
   }
 }
 
-if (! function_exists('array_last') )
-{
+if (! function_exists('array_last') ) {
   /**
    * Returns the last element in an array.
    *
@@ -40,13 +36,11 @@ if (! function_exists('array_last') )
    */
   function array_last(array $array): mixed
   {
-    if (empty($array))
-    {
+    if (empty($array)) {
       return null;
     }
 
-    if (array_is_associative($array))
-    {
+    if (array_is_associative($array)) {
       return array_values($array)[count($array) - 1];
     }
 
@@ -54,8 +48,7 @@ if (! function_exists('array_last') )
   }
 }
 
-if (! function_exists('array_find') )
-{
+if (! function_exists('array_find') ) {
   /**
    * Returns the first element in the provided array that satisfies the provided testing function.
    *
@@ -64,13 +57,12 @@ if (! function_exists('array_find') )
    *
    * @return mixed|null The first element in $arr that satisfies $callback. Returns null if no element satisfies the
    * condition.
+   * @deprecated As of PHP 8.4 this funciton is deprecated. Use the built-in array_find function instead.
    */
   function array_find(array $arr, callable $callback): mixed
   {
-    foreach ($arr as $item)
-    {
-      if ($callback($item))
-      {
+    foreach ($arr as $item) {
+      if ($callback($item)) {
         return $item;
       }
     }
@@ -78,8 +70,7 @@ if (! function_exists('array_find') )
   }
 }
 
-if (! function_exists('array_find_last') )
-{
+if (! function_exists('array_find_last') ) {
   /**
    * Iterates the given array in reverse order and returns the value of the first element that satisfies the provided
    * testing function. If no elements satisfy the testing function, null is returned.
@@ -97,8 +88,7 @@ if (! function_exists('array_find_last') )
   }
 }
 
-if (! function_exists('array_is_associative') )
-{
+if (! function_exists('array_is_associative') ) {
   /**
    * Checks if an array is associative. An array is associative if it has at least one key that is not an integer.
    *
@@ -111,8 +101,7 @@ if (! function_exists('array_is_associative') )
   }
 }
 
-if (! function_exists('array_is_sequential') )
-{
+if (! function_exists('array_is_sequential') ) {
   /**
    * Checks if an array is sequential. An array is sequential if it has consecutive integer keys starting at 0.
    *
@@ -125,8 +114,7 @@ if (! function_exists('array_is_sequential') )
   }
 }
 
-if (! function_exists('array_is_multi_dimensional') )
-{
+if (! function_exists('array_is_multi_dimensional') ) {
   /**
    * Checks if an array is multidimensional. An array is multidimensional if it contains at least one array.
    *
@@ -139,8 +127,7 @@ if (! function_exists('array_is_multi_dimensional') )
   }
 }
 
-if (! function_exists('array_trim') )
-{
+if (! function_exists('array_trim') ) {
   /**
    * Returns an array with all empty elements removed.
    *
@@ -149,23 +136,20 @@ if (! function_exists('array_trim') )
    */
   function array_trim(array $array): array
   {
-    if (empty($array))
-    {
+    if (empty($array)) {
       return $array;
     }
 
     $result = $array;
 
     $firstItem = array_first($result);
-    while ($firstItem === null || $firstItem === '' || $firstItem === false)
-    {
+    while ($firstItem === null || $firstItem === '' || $firstItem === false) {
       array_shift($result);
       $firstItem = array_first($result);
     }
 
     $lastItem = array_last($result);
-    while ($lastItem === null || $lastItem === '' || $lastItem === false)
-    {
+    while ($lastItem === null || $lastItem === '' || $lastItem === false) {
       array_pop($result);
       $lastItem = array_last($result);
     }
@@ -174,8 +158,7 @@ if (! function_exists('array_trim') )
   }
 }
 
-if (! function_exists('array_clean') )
-{
+if (! function_exists('array_clean') ) {
   /**
    * Returns an array with all empty elements removed. Empty elements include empty strings, null values, and false.
    *
@@ -187,8 +170,7 @@ if (! function_exists('array_clean') )
   {
     $cleanArray = array_filter($array, fn($item) => $null_only ? !is_null($item) : !empty($item));
 
-    if (array_is_sequential($array))
-    {
+    if (array_is_sequential($array)) {
       return array_values($cleanArray);
     }
 
@@ -200,8 +182,7 @@ if (! function_exists('array_clean') )
  *       Objects       *
  ***********************/
 
-if (! function_exists('object_to_array') )
-{
+if (! function_exists('object_to_array') ) {
   /**
    * Converts an object to an array.
    *
@@ -357,8 +338,7 @@ if (! function_exists('extract_class_name') ) {
  *     Directories     *
  ***********************/
 
-if (! function_exists('empty_directory') )
-{
+if (! function_exists('empty_directory') ) {
   /**
    * Empties a directory of all its contents.
    *
@@ -367,29 +347,23 @@ if (! function_exists('empty_directory') )
    */
   function empty_directory(string $directory_path): bool
   {
-    if (!is_dir($directory_path))
-    {
+    if (!is_dir($directory_path)) {
       return false;
     }
 
     $items = scandir($directory_path);
 
-    foreach ($items as $item)
-    {
-      if ($item === '.' || $item === '..')
-      {
+    foreach ($items as $item) {
+      if ($item === '.' || $item === '..') {
         continue;
       }
 
       $path = $directory_path . DIRECTORY_SEPARATOR . $item;
 
-      if (is_dir($path))
-      {
+      if (is_dir($path)) {
         empty_directory($path);
         rmdir($path);
-      }
-      else
-      {
+      } else {
         unlink($path);
       }
     }
@@ -401,8 +375,7 @@ if (! function_exists('empty_directory') )
 /***********************
  *        JSON         *
  ***********************/
-if (! function_exists('json_is_valid') )
-{
+if (! function_exists('json_is_valid') ) {
   /**
    * Returns true if the JSON string is valid, false otherwise. If the PHP version is 8.3.0 or greater, this function
    * will use the built-in json_validate function.
@@ -412,10 +385,8 @@ if (! function_exists('json_is_valid') )
    */
   function json_is_valid(string $input): bool
   {
-    if (version_compare(PHP_VERSION, '8.3.0', '>=') >= 0)
-    {
-      if (function_exists('json_validate'))
-      {
+    if (version_compare(PHP_VERSION, '8.3.0', '>=') >= 0) {
+      if (function_exists('json_validate')) {
         return json_validate($input);
       }
     }
