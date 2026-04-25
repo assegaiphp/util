@@ -10,7 +10,9 @@
         "psr-4": {
             "Assegai\\Util\\": "src/"
         },
-        "files": ["src/Functions.php"]
+        "files": [
+            "src/Functions.php"
+        ]
     },
     "authors": [
         {
@@ -19,7 +21,10 @@
         }
     ],
     "require": {
-        "php": ">=8.2",
+        "php": ">=8.4",
         "atatusoft-ltd/plural": "^1.1"
+    },
+    "scripts": {
+        "test": "php -d register_argc_argv=On vendor/bin/codecept run Unit"
     }
 }

@@ -152,18 +152,29 @@ EOT;
   public function testDirectoryFunctions(UnitTester $I): void
   {
     $I->wantToTest('that the empty_directory function works as expected');
-    $emptyDirectory = dirname(__DIR__, 2) . '/tests/_data/empty_directory';
-    $nonEmptyDirectory = dirname(__DIR__, 2) . '/tests/_data/non_empty_directory';
+    $root = sys_get_temp_dir() . '/assegai-util-' . uniqid('', true);
+    $emptyDirectory = $root . '/empty_directory';
+    $nonEmptyDirectory = $root . '/non_empty_directory';
+    $nestedDirectory = $nonEmptyDirectory . '/nested';
     $filename = $nonEmptyDirectory . '/foo.txt';
+    $nestedFilename = $nestedDirectory . '/bar.txt';
 
-    if (file_exists($nonEmptyDirectory))
-    {
-      touch($filename);
+    mkdir($emptyDirectory, 0777, true);
+    mkdir($nestedDirectory, 0777, true);
+    touch($filename);
+    touch($nestedFilename);
+
+    try {
+      $I->assertTrue(empty_directory($emptyDirectory));
+      $I->assertFalse(empty_directory($filename));
+      $I->assertTrue(empty_directory($nonEmptyDirectory));
+      $I->assertSame(['.', '..'], scandir($nonEmptyDirectory));
+      $I->expectThrowable('TypeError', function () { empty_directory(null); });
+    } finally {
+      @rmdir($nestedDirectory);
+      @rmdir($emptyDirectory);
+      @rmdir($nonEmptyDirectory);
+      @rmdir($root);
     }
-
-    $I->assertTrue(empty_directory($emptyDirectory));
-    $I->assertFalse(empty_directory($filename));
-    $I->assertTrue(empty_directory($nonEmptyDirectory));
-    $I->expectThrowable('TypeError', function () { empty_directory(null); });
   }
 }

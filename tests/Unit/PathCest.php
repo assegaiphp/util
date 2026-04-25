@@ -125,7 +125,7 @@ class PathCest
     $I->assertEquals('..', Path::relative('foo/bar', 'foo'));
     $I->assertEquals('../../impl/bbb', Path::relative('/data/orandea/test/aaa', '/data/orandea/impl/bbb'));
     $I->assertEquals('baz', Path::relative('foo/bar', 'foo/bar/baz'));
-    $I->assertEquals('../../../bar', Path::relative('foo/bar', 'foo/../../bar'));
+    $I->assertEquals('../../bar', Path::relative('foo/bar', 'foo/../../bar'));
     $I->assertEquals('../../bar', Path::relative('foo/bar', 'foo/../bar'));
   }
 

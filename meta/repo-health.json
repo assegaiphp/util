@@ -1,0 +1,15 @@
+{
+  "repository": "assegaiphp/util",
+  "package": "assegaiphp/util",
+  "php": ">=8.4",
+  "license": "MIT",
+  "ci": {
+    "workflow": "php.yml",
+    "label": "tests"
+  },
+  "status": {
+    "label": "active",
+    "color": "10b981",
+    "summary": "Utility helpers with a green local Codeception unit lane."
+  }
+}
