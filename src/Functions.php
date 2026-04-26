@@ -247,7 +247,7 @@ if (! function_exists('strtosnake') ) {
     # Replace underscores, spaces, and hyphens with underscores
     $output = preg_replace('/[\s\-\W_]+/', '_', $output);
 
-    $output = preg_replace('/([a-z])([A-Z])/', "$1_$2", $output);
+    $output = preg_replace('/([a-z])([A-Z])/', '$1_$2', $output);
 
     return mb_strtolower($output);
   }
