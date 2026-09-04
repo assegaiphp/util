@@ -1,6 +1,6 @@
 {
     "name": "assegaiphp/util",
-    "description": "A  collection of useful PHP utility classes to simplify common tasks and enhance application development.",
+    "description": "Focused array, text, path, and naming helpers used across AssegaiPHP.",
     "require-dev": {
         "codeception/module-phpbrowser": "*",
         "codeception/module-asserts": "*"

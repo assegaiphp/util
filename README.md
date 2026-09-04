@@ -1,5 +1,5 @@
 <div align="center" style="padding-bottom: 48px">
-    <a href="https://assegaiphp.com/" target="blank"><img src="https://assegaiphp.com/images/logos/logo-cropped.png" width="200" alt="Assegai Logo"></a>
+  <a href="https://assegaiphp.com/" target="blank"><img src="https://assegaiphp.com/images/logos/logo-cropped.png" width="200" alt="AssegaiPHP Logo"></a>
 </div>
 
 <p align="center">
@@ -10,44 +10,40 @@
   <img alt="Status active" src="https://img.shields.io/badge/status-active-10b981?style=flat-square">
 </p>
 
-<p style="text-align: center">A progressive <a href="https://php.net">PHP</a> framework for building effecient and scalable server-side applications.</p>
+# AssegaiPHP Util
 
-## Description 
-The Assegai Util package is a PHP package that provides a collection of utility classes to simplify common tasks and enhance application development. It includes various utility classes that can be used to perform common tasks, such as working with arrays, strings, dates, and more.
+<p align="center">Focused array, text, path, and naming helpers used across AssegaiPHP.</p>
+
+`assegaiphp/util` contains lightweight utilities shared by the framework and its tooling. It can also be installed independently in PHP 8.4 applications.
+
+## Requirements
+
+- PHP 8.4 or newer
 
 ## Installation
-The recommended way to install assegaiphp/util is through Composer. Run the following command in your terminal:
 
 ```bash
 composer require assegaiphp/util
 ```
 
 ## Usage
-Once you have installed assegaiphp/util, you can start using its utility classes by simply importing them into your PHP code. For example, to use the ArrayUtil class, you would add the following line at the top of your PHP file:
 
 ```php
 use Assegai\Util\ArrayUtil;
 
-$numericArray = [1, 2, 3, 4, 5];
+$values = [1, 2, 3, 4, 5];
 
-if (ArrayUtil::contains($numericArray, 3)) {
-    echo 'The array contains the value 3.';
-} else {
-    echo 'The array does not contain the value 3.';
+if (ArrayUtil::contains(3, $values)) {
+  // The value is present.
 }
-
 ```
 
-You can then call any of the static methods of the ArrayUtil class to perform various array-related tasks.
-
-## Contribution workflow
-
-For commit and pull request conventions in this repo, see:
-
-- [docs/commit-and-pr-guidelines.md](./docs/commit-and-pr-guidelines.md)
+The package also exposes `Text` and `Path` helpers plus shared naming functions loaded through Composer.
 
 ## Contributing
-Contributions are welcome! If you find a bug or would like to request a new feature, please open an issue on the GitHub repository. If you would like to contribute code, please fork the repository and submit a pull request.
+
+For contribution and pull request conventions, see [Commit and PR Guidelines](./docs/commit-and-pr-guidelines.md).
 
 ## License
-assegaiphp/util is licensed under the MIT License. See the [LICENSE](LICENSE) file for more information.
+
+AssegaiPHP Util is [MIT licensed](LICENSE).
