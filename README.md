@@ -23,7 +23,7 @@
 ## Installation
 
 ```bash
-composer require assegaiphp/util
+composer require 'assegaiphp/util:~0.11.0'
 ```
 
 ## Usage
